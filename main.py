@@ -10,17 +10,14 @@ def run():
   try:
 
     def send_message():
-      tz = timezone("Asia/Singapore")
+      tz = timezone("Asia/Singapore") #ensures that the correct timezone is being used 
       now = datetime.now(tz)
-
-      #Firstly,   
-  
      
       tables = pd.read_html("https://www.wbgt.sg/allstations") #The WBGT Bot will open up the wbgt website (https://www.wbgt.sg) and scrape                                                              the data under the section “all stations” which shows the results of the WBGT                                                               for all areas in Singapore in a table format.
       tables[0].to_csv("my_file.csv")
-      data = pd.read_csv("my_file.csv") #It converts the table which is in HTML format to CSV format for easier reading of the data.
+      data = pd.read_csv("my_file.csv") #Converts the data in the table which is in HTML format to CSV format for easier reading of data.
 
-      # In the following 4 lines of code, the WBGT Bot identifies the correct location (Old Chua Chu Kang Road) in the table and retrieves the WBGT Code and Reading that coresponds to the given location. 
+      # In the following 4 lines of code, the WBGT Bot identifies the correct location (Old Chua Chu Kang Road) in the table and retrieves the WBGT Code and WBGT Reading that coresponds to the given location. 
       location = "Old Choa Chu Kang Road"
       row_of_location = data[data.Location == location] 
 
@@ -29,7 +26,7 @@ def run():
       
       if wbgt_reading >= 35:
         base_url = 'https://api.telegram.org/bot6087536906:AAHQFuawb2xk_KlnrDdoAuAE4HE2wbqXbhU/sendMessage?chat_id=-1001626786883&text={}'.format(
-          f"WBGT Reading is {wbgt_reading}, no strenous training") #One initial roadblock I faced was that the WBGT Code was still being reflected as “Black” in the WBGT Website even when the WBGT Reading is above 34. I had to adapt and be innovative, adapting the code such instead of sending out the text message as WBGT Code “Black”, it sends out a message indicating that there should be no strenous training when the WBGT Code is 35 and above.
+          f"WBGT Reading is {wbgt_reading}, no strenous training") #One initial roadblock I faced was that the WBGT Code was still being reflected as “Black” in the WBGT Website even when the WBGT Reading was 35 and above. I had to adapt and be innovative, adapting the code such instead of sending out the text message as WBGT Code “Black”, it sends out a message indicating that there should be no strenous training when the WBGT Reading is 35 and above.
 
       else:
         base_url = 'https://api.telegram.org/bot6087536906:AAHQFuawb2xk_KlnrDdoAuAE4HE2wbqXbhU/sendMessage?chat_id=-1001626786883&text={}'.format(
