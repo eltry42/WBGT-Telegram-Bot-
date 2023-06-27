@@ -13,7 +13,7 @@ def run():
       tz = timezone("Asia/Singapore") #ensures that the correct timezone is being used 
       now = datetime.now(tz)
      
-      tables = pd.read_html("https://www.wbgt.sg/allstations") #The WBGT Bot will open up the wbgt website (https://www.wbgt.sg) and scrape                                                              the data under the section “all stations” which shows the results of the WBGT                                                               for all areas in Singapore in a table format.
+      tables = pd.read_html("https://www.wbgt.sg/allstations") #The WBGT Bot will open up the wbgt website (https://www.wbgt.sg) and scrape the data under the section “all stations” which shows the results of the WBGT for all areas in Singapore in a table format.
       tables[0].to_csv("my_file.csv")
       data = pd.read_csv("my_file.csv") #Converts the data in the table which is in HTML format to CSV format for easier reading of data.
 
@@ -33,7 +33,7 @@ def run():
         f"WBGT Reading is {wbgt_reading} and WBGT Code is {wbgt_code}") #Using the inputs (WBGT Code and WBGT Reading) obtained, the WBGT Bot will craft a text message: “WBGT Reading is {wbgt_reading} and WBGT Code is {wbgt_code}” that would be sent to the TAB Met Channel in telegram.                                                     
 
       if now.hour < 20 and now.hour > 6: #Automatically pageout the message only between the time given (0700H to 1900H)
-        requests.get(base_url) #The Python code carries out the sending of message by opening a URL backend which contains an API link with                                 information such as the WBGT Bot Token as well as the TAB MET Channel ID to ensure that the correct bot is                                  being used to send the message to the correct channel.
+        requests.get(base_url) #The Python code carries out the sending of message by opening a URL backend which contains an API link with information such as the WBGT Bot Token as well as the TAB MET Channel ID to ensure that the correct bot is being used to send the message to the correct channel.
         print("message sent!")
         time.sleep(3600) #Time delay of 3600s (60 mins) between each message sent 
         
